@@ -15,5 +15,10 @@
     "web"
   ],
   "author": "Nicola Greco <me@nicola.io> (http://nicola.io/)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "node-uuid": "^1.4.3",
+    "run-parallel": "^1.1.4"
+  }
 }

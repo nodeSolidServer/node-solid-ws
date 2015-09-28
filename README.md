@@ -48,5 +48,5 @@ server.listen(port, function () {
 })
 
 // Attach WS to solid
-solidWs(server)
+solidWs(server, app)
 ```
