@@ -44,6 +44,15 @@ describe('Solid-ws', function() {
       client.close()
       done()
     })
+    it('should receive ack in the form `ack $uri`', function(done) {
+
+      var uri = 'http://example.com/myresource'
+      client.send('sub ' + uri)
+      client.on('message', function (msg) {
+        assert.equal(msg, 'ack ' + uri)
+        done()
+      })
+    })
     it('should receive ack for any resource given', function(done) {
 
       var uris = [
