@@ -4,7 +4,7 @@
   "description": "Web sockets for Solid",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha ./test/*.js"
   },
   "keywords": [
     "solid",
@@ -20,5 +20,9 @@
     "debug": "^2.2.0",
     "node-uuid": "^1.4.3",
     "run-parallel": "^1.1.4"
+  },
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3"
   }
 }
