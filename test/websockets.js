@@ -4,6 +4,7 @@ var http = require('http')
 var parallel = require('run-parallel')
 var SolidWs = require('../')
 var EventEmitter = require('events').EventEmitter
+var utils = require('./utils')
 
 describe('Solid-ws', function() {
   var server = http.createServer()
@@ -111,59 +112,16 @@ describe('Solid-ws', function() {
       })
 
       var pubs = []
-      var workflow = new EventEmitter()
-      workflow.on('done', function () {
-        assert.equal(pubs.length, users.length)
-        done()
-      })
 
-      connectAll(clients, function() {
-        ackAll(clients, function() {
-          pubAll(clients, function() {
+      utils.connectAll(clients, url, function() {
+        utils.ackAll(clients, function() {
+          utils.pubAll(clients, pubs, function() {
+            assert.equal(pubs.length, users.length)
             done()
           })
           pubsub.publish(url)
         })
       })
-
-      function connectAll(clients, done) {
-        parallel(clients.map(function(client) {
-          return function (cb) {
-            client.on('open', function() {
-              client.send('sub ' + url)
-              cb()
-            })
-          }
-        }), done)
-      }
-
-      function ackAll(clients, done) {
-        parallel(clients.map(function(client) {
-          return function (cb) {
-            client.on('message', function (msg) {
-              if (msg.split(' ')[0] === 'ack') {
-                cb()
-                return;
-              }
-            })
-          }
-        }), done)
-      }
-
-      function pubAll(clients, done) {
-        parallel(clients.map(function(client) {
-          return function (cb) {
-            client.on('message', function (msg) {
-              if (msg.split(' ')[0] === 'pub') {
-                pubs.push(msg)
-                cb()
-                return;
-              }
-            })
-          }
-        }), done)
-      }
-
     })
   })
 })
