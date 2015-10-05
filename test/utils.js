@@ -4,11 +4,14 @@ exports.pubAll = pubAll
 
 var parallel = require('run-parallel')
 
-function connectAll(clients, url, done) {
-  parallel(clients.map(function(client) {
+function connectAll(clients, urls, done) {
+  if (typeof urls === 'string') {
+    urls = [urls]
+  }
+  parallel(clients.map(function(client, i) {
     return function (cb) {
       client.on('open', function() {
-        client.send('sub ' + url)
+        client.send('sub ' + (urls[i] || urls[0]))
         cb()
       })
     }

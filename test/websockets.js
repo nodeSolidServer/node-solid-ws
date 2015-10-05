@@ -99,13 +99,40 @@ describe('Solid-ws', function() {
   })
 
   describe('pub', function() {
+    it('should pub to everyone, independently of the host name', function (done) {
+      var urls = [
+        'http://example.com/resource.ttl',
+        'http://domain.com/resource.ttl',
+        '/resource.ttl' ]
+      var users = [
+        'http://nicola.io/#me',
+        'http://timbl.com/#me', 
+        'http://deiu.io/#me' ]
+
+      var clients = users.map(function() {
+        return new WebSocket('http://localhost:' + port)
+      })
+
+      var pubs = []
+
+      utils.connectAll(clients, urls, function() {
+        utils.ackAll(clients, function() {
+          utils.pubAll(clients, pubs, function() {
+            assert.equal(pubs.length, users.length)
+            done()
+          })
+          pubsub.publish('/resource.ttl')
+        })
+      })
+    })
+
     it('should be received by all the clients subscribed to a resource', function(done) {
 
       var url = 'http://example.com/resource.ttl'
       var users = [
-        'http://nicola.io#me',
-        'http://timbl.com#me', 
-        'http://deiu.io#me' ]
+        'http://nicola.io/#me',
+        'http://timbl.com/#me', 
+        'http://deiu.io/#me' ]
 
       var clients = users.map(function() {
         return new WebSocket('http://localhost:' + port)
@@ -119,7 +146,7 @@ describe('Solid-ws', function() {
             assert.equal(pubs.length, users.length)
             done()
           })
-          pubsub.publish(url)
+          pubsub.publish('/resource.ttl')
         })
       })
     })
