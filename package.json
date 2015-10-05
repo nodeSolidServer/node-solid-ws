@@ -1,6 +1,6 @@
 {
   "name": "solid-ws",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Web sockets for Solid",
   "main": "index.js",
   "scripts": {
