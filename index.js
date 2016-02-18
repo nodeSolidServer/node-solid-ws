@@ -6,7 +6,6 @@ module.exports = function attachToServer (server, app, opts) {
   var solidWs = new SolidWs(server, opts)
 
   if (app) {
-    console.log('setting up the app')
 
     app.post('/*', function (req, res, next) {
       debug('pub ' + req.originalUrl + ' after post')
