@@ -1,4 +1,6 @@
 # solid-ws
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/solid/node-solid-ws.svg)](https://greenkeeper.io/)
 [![](https://img.shields.io/badge/project-Solid-7C4DFF.svg?style=flat-square)](https://github.com/solid/solid)
 
 > Node/Javascript implementation of Websockets for Solid
