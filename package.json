@@ -6,6 +6,10 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha ./test/*.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solid/node-solid-ws"
+  },
   "keywords": [
     "solid",
     "websockets",
