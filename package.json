@@ -20,10 +20,10 @@
     "debug": "^2.2.0",
     "node-uuid": "^1.4.3",
     "run-parallel": "^1.1.4",
-    "ws": "^0.8.0"
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^3.3.0",
-    "mocha": "^2.3.3"
+    "mocha": "^3.2.0"
   }
 }
