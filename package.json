@@ -6,6 +6,10 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha ./test/*.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solid/node-solid-ws"
+  },
   "keywords": [
     "solid",
     "websockets",
@@ -18,9 +22,9 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^2.2.0",
-    "node-uuid": "^1.4.3",
     "run-parallel": "^1.1.4",
-    "ws": "^0.8.0"
+    "uuid": "^3.0.1",
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^3.3.0",
