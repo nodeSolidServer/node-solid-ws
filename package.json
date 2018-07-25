@@ -4,7 +4,7 @@
   "description": "Web sockets for Solid",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test/*.js"
+    "test": "./node_modules/mocha/bin/mocha --exit ./test/*.js"
   },
   "repository": {
     "type": "git",
@@ -21,13 +21,13 @@
   "author": "Nicola Greco <me@nicola.io> (http://nicola.io/)",
   "license": "MIT",
   "dependencies": {
-    "debug": "^2.2.0",
+    "debug": "^3.1.0",
     "run-parallel": "^1.1.4",
     "uuid": "^3.0.1",
-    "ws": "^1.1.1"
+    "ws": "^6.0.0"
   },
   "devDependencies": {
-    "chai": "^3.3.0",
-    "mocha": "^2.3.3"
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
   }
 }
