@@ -19,7 +19,7 @@ script:
   - npm test
   # Test global install of the package
   - npm pack .
-  - npm install -g solid-server-*.tgz
+  - npm install -g solid-ws-*.tgz
 
 cache: npm
 
