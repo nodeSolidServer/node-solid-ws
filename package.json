@@ -4,7 +4,7 @@
   "description": "Web sockets for Solid",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test/*.js"
+    "test": "./node_modules/mocha/bin/mocha ./test/*.js --exit"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "chai": "^3.3.0",
-    "mocha": "^2.3.3"
+    "mocha": "^6.1.4"
   }
 }
