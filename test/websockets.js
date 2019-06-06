@@ -106,8 +106,7 @@ describe('Solid-ws', function() {
         '/resource.ttl' ]
       var users = [
         'http://nicola.io/#me',
-        'http://timbl.com/#me', 
-        'http://deiu.io/#me' ]
+        'http://timbl.com/#me' ]
 
       var clients = users.map(function() {
         return new WebSocket('http://localhost:' + port)
@@ -131,8 +130,7 @@ describe('Solid-ws', function() {
       var url = 'http://example.com/resource.ttl'
       var users = [
         'http://nicola.io/#me',
-        'http://timbl.com/#me', 
-        'http://deiu.io/#me' ]
+        'http://timbl.com/#me' ]
 
       var clients = users.map(function() {
         return new WebSocket('http://localhost:' + port)
