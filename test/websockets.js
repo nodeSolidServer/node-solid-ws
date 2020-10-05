@@ -9,7 +9,10 @@ var utils = require('./utils')
 describe('Solid-ws', function() {
   var server = http.createServer()
   var port = 8000
-  var pubsub = SolidWs(server)
+  function checkReadAccess(iri, authToken, dpopToken) {
+    console.log('checking read access', iri, authToken, dpopToken)
+  }
+  var pubsub = SolidWs(server, { checkReadAccess })
 
   function check(msgs, uris, done) {
     parallel(msgs.map(function (msg, i) {
