@@ -10,9 +10,10 @@ describe('Solid-ws', function() {
   var server = http.createServer()
   var port = 8000
   function checkReadAccess(iri, authToken, dpopToken) {
-    console.log('checking read access', iri, authToken, dpopToken)
+    // console.log('checking read access', iri, authToken, dpopToken)
+    return true
   }
-  var pubsub = SolidWs(server, { checkReadAccess })
+  var pubsub = SolidWs(server, undefined, { checkReadAccess })
 
   function check(msgs, uris, done) {
     parallel(msgs.map(function (msg, i) {
