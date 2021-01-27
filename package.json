@@ -22,10 +22,10 @@
   "author": "Nicola Greco <me@nicola.io> (http://nicola.io/)",
   "license": "MIT",
   "dependencies": {
-    "debug": "^4.2.0",
+    "debug": "^4.3.1",
     "run-parallel": "^1.1.10",
-    "uuid": "^8.3.1",
-    "ws": "^7.4.0"
+    "uuid": "^8.3.2",
+    "ws": "^7.4.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
