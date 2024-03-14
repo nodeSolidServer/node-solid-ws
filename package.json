@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "echo nothing to build",
-    "test": "./node_modules/mocha/bin/mocha ./test/*.js --exit"
+    "test": "./node_modules/mocha/bin/mocha ./test/*.js --exit",
+    "run-example": "node example/server.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "debug": "^4.3.1",
+    "express": "^4.18.3",
     "run-parallel": "^1.1.10",
     "uuid": "^8.3.2",
     "ws": "^7.4.2"
