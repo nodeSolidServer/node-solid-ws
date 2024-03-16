@@ -6,6 +6,7 @@
   "scripts": {
     "build": "echo nothing to build",
     "test": "./node_modules/mocha/bin/mocha ./test/*.js --exit",
+    "server-injection-tests": "./node_modules/mocha/bin/mocha ./test/serverInjection/*.js --exit",
     "run-example": "node example/server.js"
   },
   "repository": {
@@ -30,7 +31,11 @@
     "ws": "^7.4.2"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^8.2.1"
+    "chai": "^4.4.1",
+    "dirty-chai": "^2.0.1",
+    "mocha": "^8.2.1",
+    "node-mocks-http": "^1.14.1",
+    "sinon": "^17.0.1",
+    "sinon-chai": "^3.7.0"
   }
 }

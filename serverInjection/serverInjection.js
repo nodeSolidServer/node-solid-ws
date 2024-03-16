@@ -1,3 +1,4 @@
+
 const {
   SolidWebsocketNotificationsServer
 } = require('../lib/notificationServer')
@@ -47,12 +48,14 @@ function customJSONError (res, statusCode, message) {
 
 function hasValidJSONLDContentNegotiation (req, res, next) {
   const accept = req.get('accept')
+
   // make sure the 'Accept' header is set in the request
   if (typeof accept !== 'string' || accept === undefined) {
     customJSONError(res, 422, 'accept header not found').end()
   }
+  const acceptArray = accept.split(',')
+  console.log(acceptArray);
 
-  const acceptArray = accept.split('')
   // if it is not an array, or it is array of length 1, it cannot
   // contain 'application/ld+json' and a 'profile' parameter
   if (!Array.isArray(acceptArray) || acceptArray.length < 2) {
@@ -64,6 +67,7 @@ function hasValidJSONLDContentNegotiation (req, res, next) {
   }
 
   const profile = acceptArray.find((item) => item.includes('profile'))
+  console.log(profile)
   if (profile === undefined) {
     customJSONError(
       res,
@@ -97,7 +101,7 @@ function hasValidJSONLDContentNegotiation (req, res, next) {
   // otherwise check 1 by 1
 }
 
-function attachSolidNotificationServer (app, opts) {
+function attachSolidNotificationServer (server, app, opts) {
   const swns = new SolidWebsocketNotificationsServer()
 
   if (app) {
@@ -129,5 +133,6 @@ module.exports = {
   attachSolidNotificationServer,
   hasValidJSONLDContentNegotiation,
   customJSONError,
-  acceptsJSONLD
+  acceptsJSONLD,
+  VALID_PROFILE_PARAMETERS
 }
