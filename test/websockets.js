@@ -1,82 +1,78 @@
-var WebSocket = require('ws')
-var assert = require('chai').assert
-var http = require('http')
-var parallel = require('run-parallel')
-var SolidWs = require('../')
-var EventEmitter = require('events').EventEmitter
-var utils = require('./utils')
+const WebSocket = require('ws')
+const assert = require('chai').assert
+const http = require('http')
+const parallel = require('run-parallel')
+const SolidWs = require('../')
+const utils = require('./utils')
 
-describe('Solid-ws', function() {
-  var server = http.createServer()
-  var port = 8000
-  var pubsub = SolidWs(server)
+describe('Solid-ws', function () {
+  const server = http.createServer()
+  const port = 8000
+  const pubsub = SolidWs(server)
 
-  function check(msgs, uris, done) {
+  function check (msgs, uris, done) {
     parallel(msgs.map(function (msg, i) {
-      return function(cb) {
+      return function (cb) {
         assert.equal(msg.split(' ')[0], 'ack')
-        var index = uris.indexOf(msg.split(' ')[1])
-        assert.notEqual(index, -1, "URL not found")
+        const index = uris.indexOf(msg.split(' ')[1])
+        assert.notEqual(index, -1, 'URL not found')
         uris.splice(index, 1)
         cb()
       }
     }),
-    function() {
+    function () {
       assert.equal(uris.length, 0)
       done()
     })
   }
 
-  before(function(done) {
+  before(function (done) {
     server.listen(port, function (err) {
       done(err)
     })
   })
-  after(function() {
+  after(function () {
     server.close()
   })
 
-  describe('sub', function() {
-    beforeEach(function(done) {
-      client = new WebSocket('http://localhost:' + port)
+  describe('sub', function () {
+    beforeEach(function (done) {
+      let client = new WebSocket('http://localhost:' + port)
       client.on('open', done)
     })
-    afterEach(function(done) {
+    afterEach(function (done) {
       client.close()
       done()
     })
-    it('should receive ack in the form `ack $uri`', function(done) {
-
-      var uri = 'http://example.com/myresource'
+    it('should receive ack in the form `ack $uri`', function (done) {
+      const uri = 'http://example.com/myresource'
       client.send('sub ' + uri)
       client.on('message', function (msg) {
         assert.equal(msg, 'ack ' + uri)
         done()
       })
     })
-    it('should receive ack for any resource given', function(done) {
-
-      var uris = [
+    it('should receive ack for any resource given', function (done) {
+      const uris = [
         'http://example.com/hello',
         'http://example.com/hello/hello.ttl',
         'http://example.com/hello/hello/.acl']
 
-      uris.map(function(uri) {
+      uris.map(function (uri) {
         client.send('sub ' + uri)
       })
 
-      var msgs = []
+      const msgs = []
       client.on('message', function (msg) {
         msgs.push(msg)
-        if (msgs.length == uris.length) {
+        if (msgs.length === uris.length) {
           check(msgs, uris, done)
         }
       })
     })
 
-    it('should receive ack even if has already subscribed', function(done) {
-
-      var uris = [
+    it('should receive ack even if has already subscribed', function (done) {
+      const uris = [
         'http://example.com/hello',
         'http://example.com/hello',
         'http://example.com/hello/hello.ttl',
@@ -84,39 +80,39 @@ describe('Solid-ws', function() {
         'http://example.com/hello/hello/.acl',
         'http://example.com/hello/hello/.acl']
 
-      uris.map(function(uri) {
+      uris.map(function (uri) {
         client.send('sub ' + uri)
       })
 
-      var msgs = []
+      const msgs = []
       client.on('message', function (msg) {
         msgs.push(msg)
-        if (msgs.length == uris.length) {
+        if (msgs.length === uris.length) {
           check(msgs, uris, done)
         }
       })
     })
   })
 
-  describe('pub', function() {
+  describe('pub', function () {
     it('should pub to everyone, independently of the host name', function (done) {
-      var urls = [
+      const urls = [
         'http://example.com/resource.ttl',
         'http://domain.com/resource.ttl',
-        '/resource.ttl' ]
-      var users = [
+        '/resource.ttl']
+      const users = [
         'http://nicola.io/#me',
-        'http://timbl.com/#me' ]
+        'http://timbl.com/#me']
 
-      var clients = users.map(function() {
+      const clients = users.map(function () {
         return new WebSocket('http://localhost:' + port)
       })
 
-      var pubs = []
+      const pubs = []
 
-      utils.connectAll(clients, urls, function() {
-        utils.ackAll(clients, function() {
-          utils.pubAll(clients, pubs, function() {
+      utils.connectAll(clients, urls, function () {
+        utils.ackAll(clients, function () {
+          utils.pubAll(clients, pubs, function () {
             assert.equal(pubs.length, users.length)
             done()
           })
@@ -125,22 +121,21 @@ describe('Solid-ws', function() {
       })
     })
 
-    it('should be received by all the clients subscribed to a resource', function(done) {
-
-      var url = 'http://example.com/resource.ttl'
-      var users = [
+    it('should be received by all the clients subscribed to a resource', function (done) {
+      const url = 'http://example.com/resource.ttl'
+      const users = [
         'http://nicola.io/#me',
-        'http://timbl.com/#me' ]
+        'http://timbl.com/#me']
 
-      var clients = users.map(function() {
+      const clients = users.map(function () {
         return new WebSocket('http://localhost:' + port)
       })
 
-      var pubs = []
+      const pubs = []
 
-      utils.connectAll(clients, url, function() {
-        utils.ackAll(clients, function() {
-          utils.pubAll(clients, pubs, function() {
+      utils.connectAll(clients, url, function () {
+        utils.ackAll(clients, function () {
+          utils.pubAll(clients, pubs, function () {
             assert.equal(pubs.length, users.length)
             done()
           })
