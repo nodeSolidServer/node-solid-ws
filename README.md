@@ -51,3 +51,25 @@ server.listen(port, function () {
 // Attach WS to solid
 solidWs(server, app)
 ```
+
+### With authorization
+
+You can pass an `authorize` callback to control which subscriptions are allowed:
+
+```javascript
+var SolidWs = require('solid-ws')
+
+var solidWs = SolidWs(server, app, {
+  authorize: function (iri, req, callback) {
+    // iri: the resource URL being subscribed to
+    // req: the HTTP upgrade request (for auth headers/cookies)
+    // callback(err, allowed): call with allowed=true to permit, false to deny
+
+    checkUserAccess(iri, req, function (err, hasAccess) {
+      callback(err, hasAccess)
+    })
+  }
+})
+```
+
+If authorization fails, the client receives `err <url> forbidden` instead of `ack`.
