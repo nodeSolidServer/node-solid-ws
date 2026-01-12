@@ -22,6 +22,8 @@ function ackAll(clients, done) {
   parallel(clients.map(function(client) {
     return function (cb) {
       client.on('message', function (msg) {
+        // ws@8 sends Buffer, convert to string
+        msg = Buffer.isBuffer(msg) ? msg.toString() : msg
         if (msg.split(' ')[0] === 'ack') {
           cb()
           return;
@@ -35,6 +37,8 @@ function pubAll(clients, pubs, done) {
   parallel(clients.map(function(client) {
     return function (cb) {
       client.on('message', function (msg) {
+        // ws@8 sends Buffer, convert to string
+        msg = Buffer.isBuffer(msg) ? msg.toString() : msg
         if (msg.split(' ')[0] === 'pub') {
           pubs.push(msg)
           cb()
